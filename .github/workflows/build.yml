@@ -13,7 +13,7 @@ jobs:
     
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: Build MP3 Player
       run: |
@@ -26,7 +26,7 @@ jobs:
         makerom -f cia -o FlaviosMP3Player.cia -elf build/FlaviosMP3Player.elf -target t
         
     - name: Upload CIA
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: FlaviosMP3Player
         path: FlaviosMP3Player.cia
