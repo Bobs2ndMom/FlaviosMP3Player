@@ -1,0 +1,32 @@
+name: Build 3DS CIA
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkita64:latest
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+      
+    - name: Build MP3 Player
+      run: |
+        apt-get update
+        apt-get install -y makerom
+        make
+        
+    - name: Create CIA
+      run: |
+        makerom -f cia -o FlaviosMP3Player.cia -elf build/FlaviosMP3Player.elf -target t
+        
+    - name: Upload CIA
+      uses: actions/upload-artifact@v3
+      with:
+        name: FlaviosMP3Player
+        path: FlaviosMP3Player.cia
